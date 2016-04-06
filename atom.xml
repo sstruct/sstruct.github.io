@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sstruct.github.io/"/>
-  <updated>2016-04-06T13:27:49.678Z</updated>
+  <updated>2016-04-06T13:40:58.449Z</updated>
   <id>http://sstruct.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sstruct.github.io/2016/04/06/%E8%AE%B0%E4%B8%80%E9%81%93%E5%85%B3%E4%BA%8E-AJAX-%E7%9A%84%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     <id>http://sstruct.github.io/2016/04/06/记一道关于-AJAX-的前端面试题/</id>
     <published>2016-04-07T03:50:11.000Z</published>
-    <updated>2016-04-06T13:27:49.678Z</updated>
+    <updated>2016-04-06T13:40:58.449Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;今天在知乎看到一个问题：&lt;a href=&quot;https://www.zhihu.com/question/41986174/answer/93491697&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;前端面试时总让写原生Ajax真的很有意义吗？&lt;/a&gt;觉得&lt;code&gt;雕兄&lt;/code&gt;的回答对我现阶段准备面试很有启发。他总结了自己作为面试官的提问思路，即以 AJAX 为主线，先抛出怎么写原生 AJAX 的问题，然后逐步扩展到 HTTP 协议、同源和跨域实现方法、前端安全等方面。下面，我将对这个问题做一些总结。&lt;/p&gt;
@@ -29,12 +29,6 @@
 &lt;p&gt;大致思路是这样的&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/img/AJAX_review.png&quot; alt=&quot;AJAX_review&quot;&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;blockquote&gt;
-&lt;p&gt;今天在知乎看到一个问题：&lt;a href=&quot;https://www.zhihu.com/question/41986174/answer/93491697&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;前端面试时总让写原生Ajax真的很有意义吗？&lt;/a&gt;觉得&lt;code&gt;雕兄&lt;/code&gt;的回答对我现阶段准备面试很有启发。他总结了自己作为面试官的提问思路，即以 AJAX 为主线，先抛出怎么写原生 AJAX 的问题，然后逐步扩展到 HTTP 协议、同源和跨域实现方法、前端安全等方面。下面，我将对这个问题做一些总结。&lt;/p&gt;
-&lt;p&gt;谁适合看这篇文章：对 XMLHttpRequest、HTTP 协议、前端安全已有初步的了解，自己又不想懒得记笔记的同学。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;大致思路是这样的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/AJAX_review.png&quot; alt=&quot;AJAX_review&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;1-原生-XHR-怎么写？&quot;&gt;&lt;a href=&quot;#1-原生-XHR-怎么写？&quot; class=&quot;headerlink&quot; title=&quot;1. 原生 XHR 怎么写？&quot;&gt;&lt;/a&gt;1. 原生 XHR 怎么写？&lt;/h1&gt;&lt;h2 id=&quot;1-1-XMLHttpRequest-基础&quot;&gt;&lt;a href=&quot;#1-1-XMLHttpRequest-基础&quot; class=&quot;headerlink&quot; title=&quot;1.1 XMLHttpRequest 基础&quot;&gt;&lt;/a&gt;1.1 XMLHttpRequest 基础&lt;/h2&gt;&lt;p&gt;最简单的，先用 XHR 发起一个 GET 请求为例，这个 GET 请求从服务器获取一个文本文件 example.txt， 并将其文本内容用提示框显示出来：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; xhr = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; XMLHttpRequest();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.onreadystatechange = handleResponse;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.open(&lt;span class=&quot;string&quot;&gt;&quot;get&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;example.txt&quot;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.send(&lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;); &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; handleResponse = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (xhr.readyState == &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ((xhr.status &amp;gt;= &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt; &amp;amp;&amp;amp; xhr.status &amp;lt; &lt;span class=&quot;number&quot;&gt;300&lt;/span&gt;) || xhr.status == &lt;span class=&quot;number&quot;&gt;304&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			alert(xhr.responseText);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			alert(&lt;span class=&quot;string&quot;&gt;&quot;Request was unsuccessful: &quot;&lt;/span&gt; + xhr.status);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;下面把这段代码扩展开来说一说：&lt;/p&gt;
