@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>yangtze 的独立博客</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://sstruct.github.io/"/>
+  <updated>2016-04-06T13:27:49.678Z</updated>
+  <id>http://sstruct.github.io/</id>
+  
+  <author>
+    <name>yangtze</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一道关于 AJAX 的前端面试题</title>
+    <link href="http://sstruct.github.io/2016/04/06/%E8%AE%B0%E4%B8%80%E9%81%93%E5%85%B3%E4%BA%8E-AJAX-%E7%9A%84%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://sstruct.github.io/2016/04/06/记一道关于-AJAX-的前端面试题/</id>
+    <published>2016-04-07T03:50:11.000Z</published>
+    <updated>2016-04-06T13:27:49.678Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;今天在知乎看到一个问题：&lt;a href=&quot;https://www.zhihu.com/question/41986174/answer/93491697&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;前端面试时总让写原生Ajax真的很有意义吗？&lt;/a&gt;觉得&lt;code&gt;雕兄&lt;/code&gt;的回答对我现阶段准备面试很有启发。他总结了自己作为面试官的提问思路，即以 AJAX 为主线，先抛出怎么写原生 AJAX 的问题，然后逐步扩展到 HTTP 协议、同源和跨域实现方法、前端安全等方面。下面，我将对这个问题做一些总结。&lt;/p&gt;
+&lt;p&gt;谁适合看这篇文章：对 XMLHttpRequest、HTTP 协议、前端安全已有初步的了解，自己又不想懒得记笔记的同学。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;大致思路是这样的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/AJAX_review.png&quot; alt=&quot;AJAX_review&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;blockquote&gt;
+&lt;p&gt;今天在知乎看到一个问题：&lt;a href=&quot;https://www.zhihu.com/question/41986174/answer/93491697&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;前端面试时总让写原生Ajax真的很有意义吗？&lt;/a&gt;觉得&lt;code&gt;雕兄&lt;/code&gt;的回答对我现阶段准备面试很有启发。他总结了自己作为面试官的提问思路，即以 AJAX 为主线，先抛出怎么写原生 AJAX 的问题，然后逐步扩展到 HTTP 协议、同源和跨域实现方法、前端安全等方面。下面，我将对这个问题做一些总结。&lt;/p&gt;
+&lt;p&gt;谁适合看这篇文章：对 XMLHttpRequest、HTTP 协议、前端安全已有初步的了解，自己又不想懒得记笔记的同学。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;大致思路是这样的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/AJAX_review.png&quot; alt=&quot;AJAX_review&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;1-原生-XHR-怎么写？&quot;&gt;&lt;a href=&quot;#1-原生-XHR-怎么写？&quot; class=&quot;headerlink&quot; title=&quot;1. 原生 XHR 怎么写？&quot;&gt;&lt;/a&gt;1. 原生 XHR 怎么写？&lt;/h1&gt;&lt;h2 id=&quot;1-1-XMLHttpRequest-基础&quot;&gt;&lt;a href=&quot;#1-1-XMLHttpRequest-基础&quot; class=&quot;headerlink&quot; title=&quot;1.1 XMLHttpRequest 基础&quot;&gt;&lt;/a&gt;1.1 XMLHttpRequest 基础&lt;/h2&gt;&lt;p&gt;最简单的，先用 XHR 发起一个 GET 请求为例，这个 GET 请求从服务器获取一个文本文件 example.txt， 并将其文本内容用提示框显示出来：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; xhr = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; XMLHttpRequest();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.onreadystatechange = handleResponse;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.open(&lt;span class=&quot;string&quot;&gt;&quot;get&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;example.txt&quot;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.send(&lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;); &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; handleResponse = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (xhr.readyState == &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ((xhr.status &amp;gt;= &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt; &amp;amp;&amp;amp; xhr.status &amp;lt; &lt;span class=&quot;number&quot;&gt;300&lt;/span&gt;) || xhr.status == &lt;span class=&quot;number&quot;&gt;304&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			alert(xhr.responseText);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			alert(&lt;span class=&quot;string&quot;&gt;&quot;Request was unsuccessful: &quot;&lt;/span&gt; + xhr.status);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;下面把这段代码扩展开来说一说：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先，创建 XHR 对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;var xhr = new XMLHttpRequest(); // IE7+&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;定义（指定）回调处理函数 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;xhr.onreadystatechange = handleResponse;&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;onreadystatechange 的回调函数在每次 readystate 发生变化时，都会调用 handleResponse 函数。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;值&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;0&lt;/td&gt;
+&lt;td&gt;未初始化。尚未调用 open()方法。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;1&lt;/td&gt;
+&lt;td&gt;启动。已经调用 open()方法，但尚未调用 send()方法。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;2&lt;/td&gt;
+&lt;td&gt;发送。已经调用 send()方法，但尚未接收到响应&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;3&lt;/td&gt;
+&lt;td&gt;接收。已经接收到部分响应数据。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;4&lt;/td&gt;
+&lt;td&gt;完成。已经接收到全部响应数据，而且已经可以在客户端使用了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;* 表中为 readystate 不同值的含义，一般使用只要判断是否为 4 就行了&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;if (xhr.readyState == 4){...}&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始化异步 XHR 请求（此时请求尚未发出）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;xhr.open(&amp;#39;get&amp;#39;,&amp;#39;example.txt&amp;#39;,true)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;open() 接受三个参数：请求的类型（”get”、”post”等）、请求资源的 URL 和表示是否异步发送请求的布尔值。&lt;/p&gt;
+&lt;p&gt;更多请求类型请看本文第 4 点。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;发出 XHR 请求，至此请求已经发出，浏览器等待服务器的响应。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;xhr.send(null)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;send() 方法的参数是请求主体要发送的数据，如果不需要发送数据，则必须传入 null，因为这个参数对有些浏览器是必需的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;服务器响应回调函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;function handleResponse(){...}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;当收到服务器的响应后，响应的数据会自动填充 XHR 对象的属性。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;responseText：作为响应主体被返回的文本。&lt;/li&gt;
+&lt;li&gt;responseXML：如果响应的内容类型是”text/xml”或”application/xml”，这个属性中将保存包含着响应数据的 XML DOM 文档。对非 XML 数据而言，此属性值为 null&lt;/li&gt;
+&lt;li&gt;status：响应的 HTTP 状态，详见本文第3点。&lt;/li&gt;
+&lt;li&gt;statusText：HTTP 状态的说明。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;此时 handleResponse() 函数将判断 readystate 是否为4（响应数据接收完毕），且 http status 是否为 200（表示成功返回）或者304（表示服务器数据未更改，继续使用浏览器缓存），判断为&lt;code&gt;是&lt;/code&gt;后，将对返回结果进行处理。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-更多的-XMLHttpRequest-Level2&quot;&gt;&lt;a href=&quot;#1-2-更多的-XMLHttpRequest-Level2&quot; class=&quot;headerlink&quot; title=&quot;1.2 更多的 XMLHttpRequest (Level2)&quot;&gt;&lt;/a&gt;1.2 更多的 &lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;XMLHttpRequest (Level2)&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;前面的例子讲了简单的 GET 请求，如果我们现在需要将本地的数据发送到服务器，就需要使用 POST 请求。常见的问题是怎么将本地的一个表单提交到服务器或者将本地的一个文件上传到服务器。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例子1：提交一个表单&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;XMLHttpRequest Level2添加了一个新的类型&lt;code&gt;FormData&lt;/code&gt;，&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;var data = new FormData(document.forms[0]);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;formData 带有一个&lt;code&gt;append()&lt;/code&gt;方法，接收一个&lt;code&gt;键值对&lt;/code&gt;作为参数，可用于向表格添加数据。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;data.append(&amp;quot;name&amp;quot;, &amp;quot;Nicholas&amp;quot;);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此外，xhr 的&lt;code&gt;send()&lt;/code&gt;方法需要将表单发送给服务器&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xhr.send(data);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其它和 GET 方法类似：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;submitForm&lt;/span&gt; = &lt;span class=&quot;title&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; xhr = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; XMLHttpRequest();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	xhr.onreadystatechange = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (xhr.readyState == &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ((xhr.status &amp;gt;= &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt; &amp;amp;&amp;amp; xhr.status &amp;lt; &lt;span class=&quot;number&quot;&gt;300&lt;/span&gt;) || xhr.status == &lt;span class=&quot;number&quot;&gt;304&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				alert(xhr.responseText); &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;				alert(&lt;span class=&quot;string&quot;&gt;&quot;Request was unsuccessful: &quot;&lt;/span&gt; + xhr.status);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;			&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	xhr.open(&lt;span class=&quot;string&quot;&gt;&quot;post&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;postexample.php&quot;&lt;/span&gt;, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; form = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&quot;user-info&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	form.append(&lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Nicholas&quot;&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;// 添加一个键值对&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	xhr.send(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FormData(form)); &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;* 参见：《JavaScript 高级程序设计（第3版）》P578，有少量更改&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;例子2：上传一个文件，并实时显示上传进度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;XMLHttpRequest Level2 新增了进度事件，在这里我们可以用来显示上传进度&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;事件&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;progress&lt;/td&gt;
+&lt;td&gt;在接收到响应数据的第一个字节时触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;error&lt;/td&gt;
+&lt;td&gt;在接收响应期间持续不断地触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;abort&lt;/td&gt;
+&lt;td&gt;在请求发生错误时触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;load&lt;/td&gt;
+&lt;td&gt;在因为调用 abort()方法而终止连接时触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;loadend&lt;/td&gt;
+&lt;td&gt;在接收到完整的响应数据时触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;loadstart&lt;/td&gt;
+&lt;td&gt;在通信完成或者触发 error、abort 或 load 事件后触发。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;部分代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;xhr.onprogress = updateProgress;	&lt;span class=&quot;comment&quot;&gt;// 上传进度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xhr.upload.onprogress = updateProgress;	&lt;span class=&quot;comment&quot;&gt;// 下载进度&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;updateProgress&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;event&lt;/span&gt;) &lt;/span&gt;&amp;#123;	&lt;span class=&quot;comment&quot;&gt;//	回调函数&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (event.lengthComputable) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	　　　&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; percentComplete = event.loaded / event.total;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;更详细的可以看下本文附录中阮一峰那篇博客。&lt;/p&gt;
+&lt;h1 id=&quot;2-怎么处理回调？&quot;&gt;&lt;a href=&quot;#2-怎么处理回调？&quot; class=&quot;headerlink&quot; title=&quot;2. 怎么处理回调？&quot;&gt;&lt;/a&gt;2. 怎么处理回调？&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;请求是否完成（readystate = 4）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;返回数据是否正确（status &amp;gt;=200 &amp;amp;&amp;amp; status&amp;lt;300 || status = 304） &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对返回数据进行处理（alert(xhr.responseText)…）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;代码参考本文第 1 点&lt;code&gt;handleResponse()&lt;/code&gt;函数。 &lt;/p&gt;
+&lt;h1 id=&quot;3-常见-status-响应状态码？&quot;&gt;&lt;a href=&quot;#3-常见-status-响应状态码？&quot; class=&quot;headerlink&quot; title=&quot;3. 常见 status 响应状态码？&quot;&gt;&lt;/a&gt;3. 常见 status 响应状态码？&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;原因&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1XX&lt;/td&gt;
+&lt;td&gt;Informational（信息性状态码）&lt;/td&gt;
+&lt;td&gt;接收的请求正在处理&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2XX&lt;/td&gt;
+&lt;td&gt;Success（成功状态码）&lt;/td&gt;
+&lt;td&gt;请求正常处理完毕&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3XX&lt;/td&gt;
+&lt;td&gt;Redirection（重定向状态码）&lt;/td&gt;
+&lt;td&gt;需要进行附加操作以完成请求&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4XX&lt;/td&gt;
+&lt;td&gt;Client Error（客户端错误状态码）&lt;/td&gt;
+&lt;td&gt;服务器无法处理请求&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5XX&lt;/td&gt;
+&lt;td&gt;Server Error（服务器错误状态码）&lt;/td&gt;
+&lt;td&gt;服务器处理请求出错&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;* 参见：《图解HTTP》P54&lt;/p&gt;
+&lt;p&gt;几个重要的 status:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;200 OK 请求成功，此时 responseText 的内容已经就绪。&lt;/li&gt;
+&lt;li&gt;204 No Content 该状态码代表服务器接收的请求已成功处理，但在返回的响应报文中不含实体的主体部分。另外，也不允许返回任何实体的主体&lt;/li&gt;
+&lt;li&gt;301 Moved Permanently 永久性重定向。该状态码表示请求的资源已被分配了新的URI，以&lt;br&gt;后应使用资源现在所指的URI。&lt;/li&gt;
+&lt;li&gt;302 Found 临时性重定向。该状态码表示请求的资源已被分配了新的URI，希&lt;br&gt;望用户（本次）能使用新的URI 访问。&lt;/li&gt;
+&lt;li&gt;304 See Other 请求资源尚未被修改，浏览器可以继续使用缓存中的数据。&lt;/li&gt;
+&lt;li&gt;401 401 Unauthorized 发送的请求需要有通过HTTP 认证（BASIC 认证、&lt;br&gt;DIGEST 认证）的认证信息。&lt;/li&gt;
+&lt;li&gt;403 Forbidden 明对请求资源的访问被服务器拒绝&lt;/li&gt;
+&lt;li&gt;404 无法找到请求的资源 || 服务器端拒绝请求且不想说明理由&lt;/li&gt;
+&lt;li&gt;500 Internal Server Error&lt;/li&gt;
+&lt;li&gt;503 Service Unavailable 超负载或正在进行停机维护&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;4-HTTP-常见请求方法&quot;&gt;&lt;a href=&quot;#4-HTTP-常见请求方法&quot; class=&quot;headerlink&quot; title=&quot;4. HTTP 常见请求方法&quot;&gt;&lt;/a&gt;4. HTTP 常见请求方法&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;方法&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;GET&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;从服务器获取资源&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;POST&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;向服务器提交要被处理的数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;HEAD&lt;/td&gt;
+&lt;td&gt;与 GET 相同，但只返回 HTTP 报头，不返回文档主体。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PUT&lt;/td&gt;
+&lt;td&gt;上传指定的 URI 表示。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DELETE&lt;/td&gt;
+&lt;td&gt;删除指定资源。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OPTIONS&lt;/td&gt;
+&lt;td&gt;返回服务器支持的 HTTP 方法。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CONNECT&lt;/td&gt;
+&lt;td&gt;把请求连接转换到透明的 TCP/IP 通道。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;*参见：&lt;a href=&quot;http://www.w3school.com.cn/tags/html_ref_httpmethods.asp&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HTTP 方法：GET 对比 POST – w3school&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;5-什么是同源策略-Same-Origin-Policy-？&quot;&gt;&lt;a href=&quot;#5-什么是同源策略-Same-Origin-Policy-？&quot; class=&quot;headerlink&quot; title=&quot;5. 什么是同源策略(Same-Origin Policy)？&quot;&gt;&lt;/a&gt;5. 什么是同源策略(Same-Origin Policy)？&lt;/h1&gt;&lt;p&gt;同协议，同域名，同端口。&lt;br&gt;不同源的客户端脚本在没明确授权的情况下，不能读写对方的资源。同源策略可以防止 Cookie 劫持等安全问题。&lt;/p&gt;
+&lt;h1 id=&quot;6-如何发起跨域请求？&quot;&gt;&lt;a href=&quot;#6-如何发起跨域请求？&quot; class=&quot;headerlink&quot; title=&quot;6. 如何发起跨域请求？&quot;&gt;&lt;/a&gt;6. 如何发起跨域请求？&lt;/h1&gt;&lt;p&gt;常见的跨域请求方法有：CORS、JSONP、postMessage等，下面分别讲一下，重点是CORS和JSONP：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CORS（Cross-Origin Resource Sharing，跨源资源共享）：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;IE8+ 中使用 XDominRequest 实现 CORS，使用方法和 XMLHttpRequest 类似，区别参见《JavaScript 高级程序设计》P582&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; xdr = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; XDomainRequest(); &lt;span class=&quot;comment&quot;&gt;// IE8+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xdr.onload = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	alert(xdr.responseText);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xdr.open(&lt;span class=&quot;string&quot;&gt;&quot;get&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;http://www.somewhere-else.com/page/&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xdr.send(&lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其他浏览器对CORS的实现：&lt;/p&gt;
+&lt;p&gt;要请求位于另一个域中的资源，使用标准的 XHR 对象并在 open()方法中传入绝对 URL：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xhr.open(&amp;quot;GET&amp;quot;, &amp;quot;https://api.github.com/user&amp;quot;,true);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在 HTTP 请求头部加入额外的&lt;code&gt;Origin&lt;/code&gt;信息：&lt;br&gt;&lt;code&gt;Origin: http://sstruct.github.io/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;此外，还需要设置服务器&lt;code&gt;Access-Control-Allow-Origin&lt;/code&gt; 头部回发相同的源信息（如果是公共资源，可以回发”*”）。例如：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Access-Control-Allow-Origin: http://sstruct.github.io/&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;JSONP（JSON with padding，填充式 JSON 或参数式 JSON）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;JSONP 和 JSON 差不多，只不过是被当作函数参数的 JSON：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;handleResponse&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;response&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	alert(&lt;span class=&quot;string&quot;&gt;&quot;You’re at IP address &quot;&lt;/span&gt; + response.ip + &lt;span class=&quot;string&quot;&gt;&quot;, which is in &quot;&lt;/span&gt; +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		response.city + &lt;span class=&quot;string&quot;&gt;&quot;, &quot;&lt;/span&gt; + response.region_name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; script = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&quot;script&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;script.src = &lt;span class=&quot;string&quot;&gt;&quot;http://freegeoip.net/json/?callback=handleResponse&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.body.insertBefore(script, &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.body.firstChild);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;参见：《JavaScript 高级程序设计》P587&lt;/p&gt;
+&lt;p&gt;JSONP 的缺点也要讲一下，首先，JSONP 是从其他域中加载代码执行。如果其他域不安全，很可能会在响应中夹带一些恶意代码。其次，难以确定 JSONP 请求是否失败。&lt;/p&gt;
+&lt;p&gt;题外话，我是不会使用 JSONP 的，已经有更好的方法，为什么还用这种蹩脚的方式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;postMessage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;HTML5 新增方法(IE8+)，语法：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;otherWindow.postMessage(message, targetOrigin);&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id=&quot;7-再聊聊-Cookie-等浏览器缓存方面&quot;&gt;&lt;a href=&quot;#7-再聊聊-Cookie-等浏览器缓存方面&quot; class=&quot;headerlink&quot; title=&quot;7. 再聊聊 Cookie 等浏览器缓存方面&quot;&gt;&lt;/a&gt;7. 再聊聊 Cookie 等浏览器缓存方面&lt;/h1&gt;&lt;p&gt;这部分可以看&lt;a href=&quot;http://jerryzou.com/posts/cookie-and-web-storage/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;详说 Cookie, LocalStorage 与 SessionStorage - 咀嚼之味&lt;/a&gt;，总结的很好，我就不废话了&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cookie 本身可以通过 &lt;code&gt;document.cookie&lt;/code&gt; 设置，这里补充一下 Cookie 的缺点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;只能存储4kb左右&lt;/li&gt;
+&lt;li&gt;每次会随着http请求带给服务器&lt;/li&gt;
+&lt;li&gt;安全性问题(存储的数据是明文的, 不要存储密码等数据)&lt;/li&gt;
+&lt;li&gt;为了提高安全性，可以添加 secure 属性，只在 https 等安全情况下才发送 Cookie&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;8-前端安全-CSRF-XSS&quot;&gt;&lt;a href=&quot;#8-前端安全-CSRF-XSS&quot; class=&quot;headerlink&quot; title=&quot;8. 前端安全 CSRF, XSS&quot;&gt;&lt;/a&gt;8. 前端安全 CSRF, XSS&lt;/h1&gt;&lt;p&gt;XSS（Cross-Site Scripting，跨站点脚本）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;XSS 全称“跨站脚本”，是注入攻击的一种。其特点是不对服务器端造成任何伤害，而是通过一些正常的站内交互途径，例如发布评论，提交含有 JavaScript 的内容文本。这时服务器端如果没有过滤或转义掉这些脚本，作为内容发布到了页面上，其他用户访问这个页面的时候就会运行这些脚本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;CSRF（Cross-Site Request Forgery，跨站点请求伪造）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CSRF 顾名思义，是伪造请求，冒充用户在站内的正常操作。我们知道，绝大多数网站是通过 cookie 等方式辨识用户身份（包括使用服务器端 Session 的网站，因为 Session ID 也是大多保存在 cookie 里面的），再予以授权的。所以要伪造用户的正常操作，最好的方法是通过 XSS 或链接欺骗等途径，让用户在本机（即拥有身份 cookie 的浏览器端）发起用户所不知道的请求。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;更详细的内容请看这里（手酸）：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://blog.tonyseek.com/post/introduce-to-xss-and-csrf/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;总结 XSS 与 CSRF 两种跨站攻击 - 无知的 TonySeek&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;9-前端模块化和根据项目写个插件（略）&quot;&gt;&lt;a href=&quot;#9-前端模块化和根据项目写个插件（略）&quot; class=&quot;headerlink&quot; title=&quot;9. 前端模块化和根据项目写个插件（略）&quot;&gt;&lt;/a&gt;9. 前端模块化和根据项目写个插件（略）&lt;/h1&gt;&lt;h2 id=&quot;参考资料：&quot;&gt;&lt;a href=&quot;#参考资料：&quot; class=&quot;headerlink&quot; title=&quot;参考资料：&quot;&gt;&lt;/a&gt;参考资料：&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;XMLHttpRequest Level 2 使用指南 - 阮一峰&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004070442&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CORS跨域资源共享 - segmentfault&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004682473&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;前端通信进阶 - segmentfault&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004556040&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;聊一聊 cookie - segmentfault&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;XMLHttpRequest - WEB API 接口|MDN&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JavaScript 的同源策略|MDN&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;postMessage - WEB API 接口|MDN&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.w3school.com.cn/tags/html_ref_httpmethods.asp&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HTTP 方法：GET 对比 POST – w3school&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.ituring.com.cn/book/946&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JavaScript 高级程序设计(第3版)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.ituring.com.cn/book/1229&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;图解HTTP&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;今天在知乎看到一个问题：&lt;a href=&quot;https://www.zhihu.com/question/41986174/answer/93491697&quot;&gt;前端面试时总让写原生Ajax真的很有意义吗？&lt;/a&gt;觉得&lt;code&gt;雕兄&lt;/code&gt;的回答对我现阶段准备面试很有启发。他总结了自己作为面试官的提问思路，即以 AJAX 为主线，先抛出怎么写原生 AJAX 的问题，然后逐步扩展到 HTTP 协议、同源和跨域实现方法、前端安全等方面。下面，我将对这个问题做一些总结。&lt;/p&gt;
+&lt;p&gt;谁适合看这篇文章：对 XMLHttpRequest、HTTP 协议、前端安全已有初步的了解，自己又不想懒得记笔记的同学。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;大致思路是这样的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/AJAX_review.png&quot; alt=&quot;AJAX_review&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
