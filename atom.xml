@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sstruct.github.io/"/>
-  <updated>2016-04-17T15:16:08.852Z</updated>
+  <updated>2016-04-17T15:16:56.103Z</updated>
   <id>http://sstruct.github.io/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://sstruct.github.io/2016/04/17/JS-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%92%8C%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
     <id>http://sstruct.github.io/2016/04/17/JS-常用函数和简单算法（二）/</id>
     <published>2016-04-17T15:09:44.000Z</published>
-    <updated>2016-04-17T15:16:08.852Z</updated>
+    <updated>2016-04-17T15:16:56.103Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;续上篇，基本都是数组和字符串的操作&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h1 id=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;a href=&quot;#有二维数组，返回每个子数组中的最大数字&quot; class=&quot;headerlink&quot; title=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;/a&gt;有二维数组，返回每个子数组中的最大数字&lt;/h1&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;如 ：&lt;code&gt;[[4, 9, 1, 3], [13, 35, 18, 26], [32, 35, 97, 39], [1000000, 1001, 857, 1]] -&amp;gt; [9, 35, 97, 1000000]&lt;/code&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;a href=&quot;#有二维数组，返回每个子数组中的最大数字&quot; class=&quot;headerlink&quot; title=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;/a&gt;有二维数组，返回每个子数组中的最大数字&lt;/h1&gt;&lt;p&gt;如 ：&lt;code&gt;[[4, 9, 1, 3], [13, 35, 18, 26], [32, 35, 97, 39], [1000000, 1001, 857, 1]] -&amp;gt; [9, 35, 97, 1000000]&lt;/code&gt;&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;largestOfFour&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;arr&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; newArr=[];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;=&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;;i++)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    newArr[i]=arr[i]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      .sort(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a,b&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a-b;&amp;#125;)	&lt;span class=&quot;comment&quot;&gt;// 数字升序排序&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      .pop();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; newArr;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;largestOfFour([[&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;], [&lt;span class=&quot;number&quot;&gt;13&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;], [&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;35&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;37&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;39&lt;/span&gt;], [&lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1001&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;857&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;code&gt;sort()&lt;/code&gt;在这里有个小坑，在进行数字比较的时候，会提前将数字转化为字符串，然后进行比较，所以会出现&lt;code&gt;1001&amp;lt;857&lt;/code&gt;的情况。我们需要做的跟上一篇中找最长单词类似，就是给sort()指定比较方法&lt;/p&gt;
 &lt;h1 id=&quot;给定一个语句和一个单词，检查语句末尾是否为该单词&quot;&gt;&lt;a href=&quot;#给定一个语句和一个单词，检查语句末尾是否为该单词&quot; class=&quot;headerlink&quot; title=&quot;给定一个语句和一个单词，检查语句末尾是否为该单词&quot;&gt;&lt;/a&gt;给定一个语句和一个单词，检查语句末尾是否为该单词&lt;/h1&gt;&lt;p&gt;如：&lt;br&gt;&lt;code&gt;(&amp;quot;What&amp;#39;s your name&amp;quot;,&amp;quot;name&amp;quot;) -&amp;gt; ture&lt;/code&gt;;&lt;code&gt;(&amp;quot;I&amp;#39;m fine&amp;quot;,&amp;quot;bad&amp;quot; -&amp;gt; false)&lt;/code&gt;&lt;/p&gt;
@@ -64,7 +64,6 @@
       &lt;blockquote&gt;
 &lt;p&gt;续上篇，基本都是数组和字符串的操作&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h1 id=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;a href=&quot;#有二维数组，返回每个子数组中的最大数字&quot; class=&quot;headerlink&quot; title=&quot;有二维数组，返回每个子数组中的最大数字&quot;&gt;&lt;/a&gt;有二维数组，返回每个子数组中的最大数字&lt;/h1&gt;
     
     </summary>
     
