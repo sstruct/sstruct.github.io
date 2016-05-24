@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://sstruct.github.io/"/>
-  <updated>2016-05-24T05:34:07.264Z</updated>
+  <updated>2016-05-24T05:35:37.930Z</updated>
   <id>http://sstruct.github.io/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://sstruct.github.io/2016/05/15/%E8%AF%91-%E7%94%A8-Mongoose-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%8F%91-Node-js-MongoDB-%E5%BA%94%E7%94%A8/"/>
     <id>http://sstruct.github.io/2016/05/15/译-用-Mongoose-轻松开发-Node-js-MongoDB-应用/</id>
     <published>2016-05-15T12:24:38.000Z</published>
-    <updated>2016-05-24T05:34:07.264Z</updated>
+    <updated>2016-05-24T05:35:37.930Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt; 写一个Node项目需要用到&lt;code&gt;MongoDB&lt;/code&gt;,&lt;code&gt;Express&lt;/code&gt;和&lt;code&gt;Node&lt;/code&gt;,于是翻译了这篇博客. 简要介绍了MongoDB和mongoose搭配使用,和在Node环境中管理数据库的过程.&lt;/p&gt;
-&lt;p&gt;原文请见&lt;a href=&quot;https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Easily Develop Node.js and MongoDB Apps with Mongoose&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 写一个Node项目需要用到&lt;code&gt;MongoDB&lt;/code&gt;,&lt;code&gt;Express&lt;/code&gt;和&lt;code&gt;Node&lt;/code&gt;,于是翻译了这篇博客. 介绍了MongoDB和mongoose的搭配使用,和在Node环境中管理数据库的过程.&lt;/p&gt;
+&lt;p&gt;原文请见 &lt;a href=&quot;https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Easily Develop Node.js and MongoDB Apps with Mongoose&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;Node.js 和 MongoDB 是天造地设的一对. MongoDB 跨越数据库和 Javascript，随意使用 JSON 的特性，使得开发过程变得非常容易. 这也是为什么会有 MEAN 这样的架构出现的原因，MEAN 架构正是指采用了 Node, Express, MongoDB, AngularJS 的技术栈.&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -88,8 +88,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt; 写一个Node项目需要用到&lt;code&gt;MongoDB&lt;/code&gt;,&lt;code&gt;Express&lt;/code&gt;和&lt;code&gt;Node&lt;/code&gt;,于是翻译了这篇博客. 简要介绍了MongoDB和mongoose搭配使用,和在Node环境中管理数据库的过程.&lt;/p&gt;
-&lt;p&gt;原文请见&lt;a href=&quot;https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications&quot;&gt;Easily Develop Node.js and MongoDB Apps with Mongoose&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 写一个Node项目需要用到&lt;code&gt;MongoDB&lt;/code&gt;,&lt;code&gt;Express&lt;/code&gt;和&lt;code&gt;Node&lt;/code&gt;,于是翻译了这篇博客. 介绍了MongoDB和mongoose的搭配使用,和在Node环境中管理数据库的过程.&lt;/p&gt;
+&lt;p&gt;原文请见 &lt;a href=&quot;https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications&quot;&gt;Easily Develop Node.js and MongoDB Apps with Mongoose&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;Node.js 和 MongoDB 是天造地设的一对. MongoDB 跨越数据库和 Javascript，随意使用 JSON 的特性，使得开发过程变得非常容易. 这也是为什么会有 MEAN 这样的架构出现的原因，MEAN 架构正是指采用了 Node, Express, MongoDB, AngularJS 的技术栈.&lt;/p&gt;
     
